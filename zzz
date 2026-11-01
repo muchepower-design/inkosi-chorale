@@ -1,0 +1,160 @@
+-- =====================================================
+-- SAMPLE DATA FOR FAZ DATABASE
+-- 10 entries per table
+-- =====================================================
+
+-- -----------------------------------------------------
+-- 1. USERS (10 entries, including admin)
+-- Passwords are hashed with bcrypt; use password "admin123" for admin, "password123" for others.
+-- In reality, you would create them via backend registration.
+-- Here we use placeholder hashes (bcrypt hash of "password123").
+-- -----------------------------------------------------
+INSERT INTO users (username, email, hashed_password, full_name, role, club_id, is_active, created_at)
+VALUES
+('matchcomm1', 'comm1@faz.zm', '$2b$12$KIXQk8R7BcYt5VXw3ZQzZeHhYeQ9jT6kL8mN2oP0qR1sU4vW6xY', 'John Banda', 'MATCH_COMMISSIONER', NULL, true, NOW()),
+('media1', 'media1@faz.zm', '$2b$12$KIXQk8R7BcYt5VXw3ZQzZeHhYeQ9jT6kL8mN2oP0qR1sU4vW6xY', 'Mary Chilufya', 'MEDIA_OFFICER', NULL, true, NOW()),
+('clubrep_zesco', 'rep@zesco.co.zm', '$2b$12$KIXQk8R7BcYt5VXw3ZQzZeHhYeQ9jT6kL8mN2oP0qR1sU4vW6xY', 'George Phiri', 'CLUB_REP', 1, true, NOW()),  -- assumes ZESCO United id=1
+('clubrep_nkana', 'rep@nkana.co.zm', '$2b$12$KIXQk8R7BcYt5VXw3ZQzZeHhYeQ9jT6kL8mN2oP0qR1sU4vW6xY', 'Peter Mwila', 'CLUB_REP', 2, true, NOW()),
+('referee1', 'ref1@faz.zm', '$2b$12$KIXQk8R7BcYt5VXw3ZQzZeHhYeQ9jT6kL8mN2oP0qR1sU4vW6xY', 'Janny Sikazwe', 'REFEREE', NULL, true, NOW()),
+('referee2', 'ref2@faz.zm', '$2b$12$KIXQk8R7BcYt5VXw3ZQzZeHhYeQ9jT6kL8mN2oP0qR1sU4vW6xY', 'Gladys Lengwe', 'REFEREE', NULL, true, NOW()),
+('viewer1', 'fan1@example.com', '$2b$12$KIXQk8R7BcYt5VXw3ZQzZeHhYeQ9jT6kL8mN2oP0qR1sU4vW6xY', 'Fan Zulu', 'VIEWER', NULL, true, NOW()),
+('viewer2', 'fan2@example.com', '$2b$12$KIXQk8R7BcYt5VXw3ZQzZeHhYeQ9jT6kL8mN2oP0qR1sU4vW6xY', 'Fan Banda', 'VIEWER', NULL, true, NOW()),
+('viewer3', 'fan3@example.com', '$2b$12$KIXQk8R7BcYt5VXw3ZQzZeHhYeQ9jT6kL8mN2oP0qR1sU4vW6xY', 'Fan Mwape', 'VIEWER', NULL, true, NOW())
+ON CONFLICT (username) DO NOTHING;
+
+-- -----------------------------------------------------
+-- 2. TEAMS (10 Zambian clubs)
+-- -----------------------------------------------------
+INSERT INTO teams (name, short_name, logo, founded, stadium, coach, description)
+VALUES
+('ZESCO United', 'ZESCO', 'https://example.com/logos/zesco.png', 1974, 'Levy Mwanawasa Stadium', 'Numba Mumamba', 'Defending champions and most successful club in Zambia.'),
+('Nkana FC', 'Nkana', 'https://example.com/logos/nkana.png', 1935, 'Nkana Stadium', 'Beston Chambeshi', 'One of the oldest and most decorated clubs.'),
+('Power Dynamos', 'Power', 'https://example.com/logos/power.png', 1971, 'Arthur Davies Stadium', 'Mwenya Chipepo', 'Known as "The Magnificent".'),
+('Kabwe Warriors', 'Warriors', 'https://example.com/logos/warriors.png', 1970, 'Godfrey Chitalu Stadium', 'Mumamba Numba', 'Based in the mining town of Kabwe.'),
+('Green Buffaloes', 'Buffaloes', 'https://example.com/logos/buffaloes.png', 1965, 'Independence Stadium', 'Bilton Musonda', 'Army-sponsored club.'),
+('Red Arrows', 'Arrows', 'https://example.com/logos/arrows.png', 1970, 'Nkoloma Stadium', 'Chisi Mbewe', 'Air force club.'),
+('Zanaco FC', 'Zanaco', 'https://example.com/logos/zanaco.png', 1978, 'Sunset Stadium', 'Kelvin Kaindu', 'Bank-sponsored club, known as "The Bankers".'),
+('Lusaka Dynamos', 'Dynamos', 'https://example.com/logos/lusakadynamos.png', 1997, 'Independence Stadium', 'Mikhail Mwale', 'Based in Lusaka.'),
+('Forest Rangers', 'Forest', 'https://example.com/logos/forest.png', 1970, 'Levy Mwanawasa Stadium', 'Mwenya Chipepo', 'Based in Ndola.'),
+('Mufulira Wanderers', 'Wanderers', 'https://example.com/logos/wanderers.png', 1953, 'Shinde Stadium', 'Hassan Mwila', 'Famous for producing many Zambian internationals.')
+ON CONFLICT (name) DO NOTHING;
+
+-- -----------------------------------------------------
+-- 3. PLAYERS (10 players, assigned to teams)
+-- -----------------------------------------------------
+INSERT INTO players (name, position, jersey_number, date_of_birth, nationality, photo, team_id, goals, assists, appearances)
+VALUES
+('Moses Phiri', 'Forward', 9, '1996-05-15', 'Zambia', 'https://example.com/photos/phiri.jpg', 1, 15, 7, 24),
+('John Chingandu', 'Midfielder', 10, '1998-02-10', 'Zambia', 'https://example.com/photos/chingandu.jpg', 1, 8, 12, 22),
+('Roderick Kabwe', 'Defender', 5, '1992-11-15', 'Zambia', 'https://example.com/photos/kabwe.jpg', 2, 3, 1, 30),
+('Idris Mbombo', 'Forward', 11, '1995-07-22', 'DR Congo', 'https://example.com/photos/mbombo.jpg', 2, 12, 4, 20),
+('Luka Banda', 'Goalkeeper', 1, '1990-01-01', 'Zambia', 'https://example.com/photos/luka.jpg', 3, 0, 0, 18),
+('Chanda Mukuka', 'Forward', 7, '1997-09-09', 'Zambia', 'https://example.com/photos/mukuka.jpg', 3, 9, 6, 23),
+('Kingsley Kasanga', 'Midfielder', 8, '1994-03-14', 'Zambia', 'https://example.com/photos/kasanga.jpg', 4, 5, 8, 26),
+('Emmanuel Mayuka', 'Forward', 17, '1990-11-21', 'Zambia', 'https://example.com/photos/mayuka.jpg', 5, 4, 2, 15),
+('Stoppila Sunzu', 'Defender', 2, '1989-06-22', 'Zambia', 'https://example.com/photos/sunzu.jpg', 6, 2, 1, 28),
+('Rainford Kalaba', 'Midfielder', 14, '1986-08-14', 'Zambia', 'https://example.com/photos/kalaba.jpg', 7, 6, 9, 20)
+ON CONFLICT DO NOTHING;
+
+-- -----------------------------------------------------
+-- 4. MATCHES (10 upcoming/finished)
+-- -----------------------------------------------------
+INSERT INTO matches (home_team, away_team, home_score, away_score, match_date, venue, competition, status, referee_id)
+VALUES
+('ZESCO United', 'Nkana FC', 2, 1, '2025-03-15 15:00:00+02', 'Levy Mwanawasa Stadium', 'Super League', 'finished', 6),
+('Power Dynamos', 'Kabwe Warriors', 0, 0, '2025-03-16 15:00:00+02', 'Arthur Davies Stadium', 'Super League', 'finished', 7),
+('Green Buffaloes', 'Red Arrows', 1, 2, '2025-03-22 15:00:00+02', 'Independence Stadium', 'Super League', 'upcoming', 6),
+('Zanaco FC', 'Lusaka Dynamos', NULL, NULL, '2025-03-23 15:00:00+02', 'Sunset Stadium', 'Super League', 'upcoming', 7),
+('Forest Rangers', 'Mufulira Wanderers', NULL, NULL, '2025-03-29 15:00:00+02', 'Levy Mwanawasa Stadium', 'Super League', 'upcoming', NULL),
+('Nkana FC', 'Power Dynamos', NULL, NULL, '2025-04-05 15:00:00+02', 'Nkana Stadium', 'Super League', 'upcoming', NULL),
+('ZESCO United', 'Green Buffaloes', NULL, NULL, '2025-04-06 15:00:00+02', 'Levy Mwanawasa Stadium', 'Super League', 'upcoming', NULL),
+('Red Arrows', 'Zanaco FC', NULL, NULL, '2025-04-12 15:00:00+02', 'Nkoloma Stadium', 'Super League', 'upcoming', NULL),
+('Kabwe Warriors', 'Forest Rangers', NULL, NULL, '2025-04-13 15:00:00+02', 'Godfrey Chitalu Stadium', 'Super League', 'upcoming', NULL),
+('Mufulira Wanderers', 'Lusaka Dynamos', NULL, NULL, '2025-04-19 15:00:00+02', 'Shinde Stadium', 'Super League', 'upcoming', NULL);
+
+-- -----------------------------------------------------
+-- 5. MATCH EVENTS (goals, cards for the first two matches)
+-- -----------------------------------------------------
+INSERT INTO match_events (match_id, event_type, player_id, related_player_id, minute, minute_added)
+VALUES
+(1, 'goal', 1, NULL, 23, 0),   -- Moses Phiri goal
+(1, 'goal', 1, 2, 67, 0),      -- Moses Phiri goal assisted by Chingandu
+(1, 'goal', 4, NULL, 78, 0),   -- Idris Mbombo goal
+(1, 'yellow_card', 3, NULL, 45, 1),
+(2, 'goal', 6, NULL, 12, 0),   -- Chanda Mukuka goal
+(2, 'yellow_card', 5, NULL, 34, 0),
+(2, 'red_card', 7, NULL, 88, 0);
+
+-- -----------------------------------------------------
+-- 6. LEAGUE TABLE (after first 2 rounds, 10 teams)
+-- -----------------------------------------------------
+INSERT INTO league_table (team_id, played, won, drawn, lost, goals_for, goals_against, points, season)
+VALUES
+(1, 2, 2, 0, 0, 5, 1, 6, '2025'),
+(2, 2, 1, 0, 1, 3, 3, 3, '2025'),
+(3, 2, 1, 1, 0, 2, 1, 4, '2025'),
+(4, 2, 0, 1, 1, 1, 2, 1, '2025'),
+(5, 2, 0, 0, 2, 1, 4, 0, '2025'),
+(6, 2, 2, 0, 0, 4, 1, 6, '2025'),
+(7, 2, 1, 0, 1, 2, 2, 3, '2025'),
+(8, 2, 0, 0, 2, 0, 3, 0, '2025'),
+(9, 2, 1, 1, 0, 3, 2, 4, '2025'),
+(10, 2, 0, 1, 1, 1, 2, 1, '2025');
+
+-- -----------------------------------------------------
+-- 7. NEWS (10 articles, author = admin id=1)
+-- -----------------------------------------------------
+INSERT INTO news (title, slug, content, excerpt, featured_image, author_id, views, is_published, published_at)
+VALUES
+('Zambia to host 2025 COSAFA Cup', 'zambia-host-2025-cosafa-cup', 'Full content...', 'FAZ announces successful bid to host regional tournament.', 'https://example.com/news/cosafa.jpg', 1, 120, true, NOW()),
+('Chipolopolo Squad announced for friendlies', 'chipolopolo-squad-announced', 'Full content...', 'Coach names 23-man squad for upcoming international friendlies.', 'https://example.com/news/squad.jpg', 1, 89, true, NOW()),
+('FAZ launches grassroots coaching program', 'grassroots-coaching-program', 'Full content...', 'New initiative to train 500 coaches across all provinces.', 'https://example.com/news/grassroots.jpg', 1, 56, true, NOW()),
+('Women’s Super League kicks off', 'womens-super-league-kicks-off', 'Full content...', 'New season promises more competitive matches.', 'https://example.com/news/women.jpg', 1, 72, true, NOW()),
+('ZESCO United clinch league title', 'zesco-united-clinch-title', 'Full content...', 'Third consecutive title for Ndola-based giants.', 'https://example.com/news/zesco.jpg', 1, 210, true, NOW()),
+('Referee Janny Sikazwe honored by CAF', 'sikazwe-honored-by-caf', 'Full content...', 'Zambian referee receives excellence award.', 'https://example.com/news/referee.jpg', 1, 45, true, NOW()),
+('U-20 national team qualifies for AFCON', 'u20-qualifies-for-afcon', 'Full content...', 'Young Chipolopolo beat rivals to book ticket.', 'https://example.com/news/u20.jpg', 1, 103, true, NOW()),
+('FAZ partners with MTN for digital transformation', 'faz-mtn-partnership', 'Full content...', 'New mobile app and fan engagement platform.', 'https://example.com/news/mtn.jpg', 1, 67, true, NOW()),
+('Stadium safety workshop held', 'stadium-safety-workshop', 'Full content...', 'Stakeholders trained on fan safety and security.', 'https://example.com/news/safety.jpg', 1, 34, true, NOW()),
+('Legend Kalaba announces retirement', 'kalaba-retires', 'Full content...', 'Midfield maestro hangs up boots after 20-year career.', 'https://example.com/news/kalaba.jpg', 1, 210, true, NOW());
+
+-- -----------------------------------------------------
+-- 8. TAGS & NEWS_TAGS (associate tags with news)
+-- -----------------------------------------------------
+INSERT INTO tags (name, slug) VALUES
+('COSAFA', 'cosafa'),
+('National Team', 'national-team'),
+('Coaching', 'coaching'),
+('Women Football', 'women-football'),
+('Super League', 'super-league'),
+('Referees', 'referees'),
+('Youth', 'youth'),
+('Partnerships', 'partnerships');
+
+INSERT INTO news_tags (news_id, tag_id) VALUES
+(1,1), (2,2), (3,3), (4,4), (5,5), (6,6), (7,7), (8,8), (9,6), (10,5);
+
+-- -----------------------------------------------------
+-- 9. MATCH REPORTS (for finished matches, referee_id 6 and 7)
+-- -----------------------------------------------------
+INSERT INTO match_reports (match_id, referee_id, content, yellow_cards, red_cards, incidents)
+VALUES
+(1, 6, 'Well-contested match. ZESCO scored twice in first half. Nkana pulled one back late. No major incidents.',
+ '[{"player":"Roderick Kabwe","minute":45},{"player":"John Chingandu","minute":67}]', '[]', '[]'),
+(2, 7, 'Power Dynamos and Kabwe Warriors shared spoils in a physical encounter. One red card for violent conduct.',
+ '[{"player":"Luka Banda","minute":34}]', '[{"player":"Kingsley Kasanga","minute":88}]', '[]');
+
+-- -----------------------------------------------------
+-- 10. BULK IMPORT LOGS (10 sample logs)
+-- -----------------------------------------------------
+INSERT INTO bulk_import_logs (table_name, file_name, rows_imported, errors, imported_by, imported_at)
+VALUES
+('teams', 'teams_2025.csv', 10, NULL, 1, NOW()),
+('players', 'players_initial.csv', 25, '2 duplicate rows skipped', 1, NOW()),
+('matches', 'matches_2025_schedule.json', 38, NULL, 1, NOW()),
+('news', 'news_archive.csv', 15, NULL, 2, NOW()),
+('players', 'players_transfer_window.csv', 5, 'ID conflict on 1 row', 1, NOW()),
+('league_table', 'table_update_round2.csv', 10, NULL, 1, NOW()),
+('match_events', 'match_events_round1.json', 12, NULL, 2, NOW()),
+('match_reports', 'reports_may.json', 2, NULL, 6, NOW()),
+('teams', 'teams_logos_update.csv', 10, NULL, 1, NOW()),
+('users', 'media_officers.csv', 3, NULL, 1, NOW());

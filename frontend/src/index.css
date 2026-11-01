@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-inkosi-cream font-sans text-inkosi-dark;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-gradient-gold text-inkosi-dark font-semibold py-3 px-6 rounded-lg 
+           transition-all duration-300 hover:shadow-gold-lg hover:scale-105 
+           focus:outline-none focus:ring-2 focus:ring-inkosi-gold focus:ring-offset-2;
+  }
+  
+  .btn-secondary {
+    @apply border-2 border-inkosi-gold text-inkosi-gold font-semibold py-2 px-5 
+           rounded-lg transition-all duration-300 hover:bg-inkosi-gold/10;
+  }
+  
+  .btn-outline-teal {
+    @apply border-2 border-inkosi-teal text-inkosi-teal font-semibold py-2 px-5 
+           rounded-lg transition-all duration-300 hover:bg-inkosi-teal/10;
+  }
+  
+  .input-field {
+    @apply w-full px-4 py-3 rounded-lg border border-gray-300 
+           focus:border-inkosi-gold focus:ring-2 focus:ring-inkosi-gold/30 
+           outline-none transition-all bg-white;
+  }
+  
+  .card {
+    @apply bg-white rounded-2xl shadow-xl overflow-hidden 
+           border-t-4 border-inkosi-gold;
+  }
+  
+  .badge-soprano {
+    @apply bg-pink-100 text-pink-700;
+  }
+  .badge-alto {
+    @apply bg-purple-100 text-purple-700;
+  }
+  .badge-tenor {
+    @apply bg-blue-100 text-blue-700;
+  }
+  .badge-bass {
+    @apply bg-inkosi-teal/20 text-inkosi-teal;
+  }
+}
